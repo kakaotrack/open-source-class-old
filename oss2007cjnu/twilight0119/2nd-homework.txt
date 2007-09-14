@@ -1,0 +1,5 @@
+# Project members authenticate over HTTPS to allow committing changes.
+svn checkout https://open-source-class.googlecode.com/svn/trunk/ open-source-class --username twilight0119
+
+When prompted, enter your generated googlecode.com password.
+
