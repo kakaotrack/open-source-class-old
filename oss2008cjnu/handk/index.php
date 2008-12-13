@@ -1,5 +1,4 @@
 <?php
-/*SVN test*/
    function extractKeyword($target, $mother) {
        global $configVal;
        requireComponent('Textcube.Function.Setting');
