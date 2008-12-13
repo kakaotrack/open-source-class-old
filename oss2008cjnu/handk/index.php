@@ -21,6 +21,7 @@
 	   }
 	   
        $target=$target."<div class='listbox'><h3>Extracted Keywords</h3><div>$printer</div></div>";
+	/* Flex Component will be inserted here */
 
        return $target;
    }

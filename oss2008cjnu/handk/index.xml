@@ -5,8 +5,8 @@
      <version>0.01</version>
      <description xml:lang="ko">Daum의 Open API를 사용하여 본문에서 키워드를 추출합니다.</description>
      <license>GPL</license>
-     <author xml:lang="ko" link="http://needlworks.org">한동균(제주소년)</author>
-     <safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
+     <author xml:lang="ko" link="http://www.handkstory.net">한동균(제주소년)</author>
+     <safety changeData="no" exposeData="no" accessLocal="yes" accessRemote="yes" accessRaw="no" />
      <requirements>
        <textcube>1.5</textcube>
      </requirements>
