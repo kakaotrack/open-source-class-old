@@ -1,5 +1,4 @@
 <?php
-/* 한글 주석처리 테스트.. */
    function extractKeyword($target, $mother) {
        global $configVal;
        requireComponent('Textcube.Function.Setting');
