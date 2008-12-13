@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <plugin version="1.0">
+     <title xml:lang="ko">Test 중입니다!!!</title>
+     <link>http://www.example.com/</link>
+     <version>1.0</version>
+     <description xml:lang="ko">테스트 플러그인입니다.</description>
+     <license>GPL</license>
+     <author xml:lang="ko" link="http://www.example.com">양준호</author>
+     <safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
+     <requirements>
+       <textcube>1.5</textcube>
+     </requirements>
+     <binding>
+          <tag name="HelloWorld" handler="Helloworld_Show" />
+     </binding>
+   </plugin>
