@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin version="1.0">
+	<title xml:lang="ko">DMap</title>
+	<link>http://zaku.gg.gg</link>
+	<version>1.0</version>
+	<description xml:lang="ko">게시물에 다음맵을 삽입할 수 있다.</description>
+	<license>GPL</license>
+	<author xml:lang="ko" link="http://zaku.gg.gg">zaku</author>
+	<safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
+	<requirements>
+		<textcube>1.7.6</textcube>
+	</requirements>
+	<binding>
+		<tag name="HelloWorld" handler="Helloworld_Show" />
+	</binding>
+</plugin>
