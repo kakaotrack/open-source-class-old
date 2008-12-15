@@ -1,5 +1,7 @@
 <?php
-     function Helloworld_Show($target) {
-          return $target.'Hello World!';
+     function Sidebar_Show($parameters)
+     {
+        if(isset($parameters['message'])) return $parameters['message'];
+        else return 'Sidebar';
      }
 ?>
