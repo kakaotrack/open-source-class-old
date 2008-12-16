@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
    <plugin version="1.0">
      <title xml:lang="ko">사이드바 예제 실습</title>
-     <link>http://www.example.com/</link>
+     <link>http://kr.yahoo.com</link>
      <version>1.0</version>
      <description xml:lang="ko">현재 예제 테스트 중입니다.</description>
      <license>GPL</license>
