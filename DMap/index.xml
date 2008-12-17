@@ -12,5 +12,6 @@
 	</requirements>
 	<binding>
 		<tag name="HelloWorld" handler="Helloworld_Show" />
+		<tag name="SKIN_body_start" handler="Test_Show" />
 	</binding>
 </plugin>
