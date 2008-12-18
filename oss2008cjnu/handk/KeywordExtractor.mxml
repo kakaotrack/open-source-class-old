@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="init();">
 <mx:Script>
 	<![CDATA[
+	import mx.controls.Alert;
+	import mx.rpc.events.ResultEvent;
 	import mx.rpc.events.FaultEvent;
 	import mx.events.ResizeEvent;
 	import mx.collections.XMLListCollection;
@@ -11,28 +13,29 @@
 	public var xmlData:XML;
 	
 	public function init():void{
-		DaumServer.addEventListener("result", result);
-		DaumServer.addEventListener("fault", fault);
+		DaumServer.addEventListener("result", resultHandler);
+		DaumServer.addEventListener("fault", faultHandler);
 	}
-	
-	public function result(event:ResizeEvent):void{
-		xmlData = DaumServer.lastResult.data.daum as XML;
+	public var count:int; //number of extracted keywords
+	public function resultHandler(event:ResultEvent):void{
 		//testGrid.dataProvider = xmlData.item;
-	}
-	public function fault(event:FaultEvent):void{
 		
-	}
-	
-		
-	public function getKeyword():void{
-		DaumServer.send();	
-		var count:int; //number of extracted keywords
-				
+		/* 				
 		if(DaumServer.lastResult.daum.itemcount<5){
 			count = DaumServer.lastResult.daum.itemcount;
 		}else{
 			count = 5;
 		}
+		*/
+	}
+	public function faultHandler(event:FaultEvent):void{
+		mx.controls.Alert.show(event.fault.message);
+	}
+	
+		
+	public function getKeyword():void{
+		DaumServer.send();	
+		/*
 		var newSeries:Array = new Array();
 		for(var i:int =0 ; i<count; i++){
 			var series:ColumnSeries = new ColumnSeries();
@@ -41,25 +44,36 @@
 			newSeries.push(series);
 		} 
 		chart.series = newSeries;
+		*/
 	}
 	]]>
 </mx:Script>
-<mx:HTTPService id="DaumServer" resultFormat="e4x" method="POST" useProxy="false"  url="http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883">
+<mx:HTTPService id="DaumServer" method="POST" url="http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883">
 <mx:request>
 	<q>{test.text}</q>
 </mx:request>	
 </mx:HTTPService>
-
-<mx:ColumnChart id="chart" dataProvider="{DaumServer.lastResult.daum.item}" creationComplete="getKeyword();">
+<!--
+<mx:ColumnChart id="chart" dataProvider="{DaumServer.lastResult.daum.item}">
+<mx:series>
+	<mx:ColumnSeries displayName="keyword" yField="count"/>
+</mx:series>
 </mx:ColumnChart>
-
+-->
 <mx:DataGrid id="testGrid" dataProvider="{DaumServer.lastResult.daum.item}">
 	<mx:columns>
-		<mx:DataGridColumn dataField="keyword" headerText="keyword"/>
+		<mx:DataGridColumn dataField="keyword" headerText="keyword">
+		<!--
+			<mx:itemRenderer>
+				<mx:Component>
+					<mx:Label htmlText="{data.keyword}"/>
+				</mx:Component>
+			</mx:itemRenderer>
+			-->
+		</mx:DataGridColumn>
 	</mx:columns>
 </mx:DataGrid>
-<mx:TextArea id="test">
-	
-</mx:TextArea>
+<mx:TextArea id="test"/>
+<mx:Text id="test1"/>
 <mx:Button click="getKeyword();"/>
 </mx:Application>
