@@ -5,7 +5,7 @@
      <version>1.0</version>
      <description xml:lang="ko">현재 예제 테스트 중입니다.</description>
      <license>GPL</license>
-     <author xml:lang="ko" link="http://www.example.com">양준호</author>
+     <author xml:lang="ko" link="http://kr.yahoo.com">양준호</author>
      <safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
      <requirements>
        <textcube>1.5</textcube>
