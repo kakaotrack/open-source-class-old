@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>다음 지도API 테스트 페이지 </title>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps.js?apikey=657583606f04bc4f455035664df326869c4c79b7"></script>
+</head>
+<body>
+	<div id="map" style="width:600px;height:400px;"></div>
+
+	<script type="text/javascript">	
+		var map = new DMap("map", {point:new DLatLng(37.48879895934866, 127.03130020103005), level:2}); 
+
+		var zc = new DZoomControl();
+		map.addControl(zc);
+	 	zc.setAlign("right");	
+	</script>
+</body>
+</html>
