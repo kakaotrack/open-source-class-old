@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="init();" backgroundColor="#FFFFFF">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init();" backgroundColor="#FFFFFF" layout="absolute" width="400" height="250">
 <mx:Script>
 	<![CDATA[
 	import mx.controls.Alert;
@@ -10,27 +10,25 @@
 	import mx.charts.series.ColumnSeries;
 	import mx.events.IndexChangedEvent;
 	
+	public var urlAddr:String;	
+	public var query:String;
 	public function init():void{
-		DaumServer.addEventListener("result", resultHandler);
-		DaumServer.addEventListener("fault", faultHandler);
-	}
-	public function resultHandler(event:ResultEvent):void{
-	}
-	public function faultHandler(event:FaultEvent):void{
-		mx.controls.Alert.show(event.fault.message);
-	}
-	public function getKeyword():void{
-		DaumServer.send();			
+		Security.allowDomain("*");
+		Security.allowInsecureDomain("*");
+		urlAddr = "http://apis.daum.net/suggest/keyword?apikey=";
+		urlAddr = url+Application.application.parameters.apikey;
+		DaumServer.url=urlAddr;
+		query = Application.application.parameters.query;
+		DaumServer.request.q=query;				
+		DaumServer.send();
 	}
 	]]>
 </mx:Script>
-<mx:HTTPService id="DaumServer" method="POST" url="http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883">
-<mx:request>
-	<q>{test.text}</q>
-</mx:request>	
-</mx:HTTPService>
 
-<mx:ColumnChart id="chart" dataProvider="{DaumServer.lastResult.daum.item}" showDataTips="true">
+<!--<mx:HTTPService id="DaumServer" method="POST" url="http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883"/>-->
+<mx:HTTPService id="DaumServer" method="POST" useProxy="false"/>
+
+<mx:ColumnChart id="chart" dataProvider="{DaumServer.lastResult.daum.item}" showDataTips="true" x="0" y="0" width="400" height="100%">
 <mx:horizontalAxis>
 	<mx:CategoryAxis dataProvider="{DaumServer.lastResult.daum.item}" categoryField="keyword"/>
 </mx:horizontalAxis>
@@ -38,7 +36,9 @@
 	<mx:ColumnSeries xField="keyword" yField="count"/>
 </mx:series>
 </mx:ColumnChart>
-
+<!--
 <mx:TextArea id="test"/>
 <mx:Button click="getKeyword();"/>
+-->
+<mx:Text id="test"/>
 </mx:Application>
