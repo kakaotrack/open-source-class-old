@@ -11,6 +11,6 @@
 		<textcube>1.7.6</textcube>
 	</requirements>
 	<binding>
-		<listener event="AddPostEditorToolbox" handler="DMap_AddPostEditorToolBox" />
+		<listener event="AddPostEditorToolbox">DMap_AddPostEditorToolBox</listener>
 	</binding>
 </plugin>
