@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="init();">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="init();" backgroundColor="#FFFFFF">
 <mx:Script>
 	<![CDATA[
 	import mx.controls.Alert;
@@ -10,41 +10,17 @@
 	import mx.charts.series.ColumnSeries;
 	import mx.events.IndexChangedEvent;
 	
-	public var xmlData:XML;
-	
 	public function init():void{
 		DaumServer.addEventListener("result", resultHandler);
 		DaumServer.addEventListener("fault", faultHandler);
 	}
-	public var count:int; //number of extracted keywords
 	public function resultHandler(event:ResultEvent):void{
-		//testGrid.dataProvider = xmlData.item;
-		
-		/* 				
-		if(DaumServer.lastResult.daum.itemcount<5){
-			count = DaumServer.lastResult.daum.itemcount;
-		}else{
-			count = 5;
-		}
-		*/
 	}
 	public function faultHandler(event:FaultEvent):void{
 		mx.controls.Alert.show(event.fault.message);
 	}
-	
-		
 	public function getKeyword():void{
-		DaumServer.send();	
-		/*
-		var newSeries:Array = new Array();
-		for(var i:int =0 ; i<count; i++){
-			var series:ColumnSeries = new ColumnSeries();
-			series.yField =DaumServer.lastResult.daum.item.count;
-			series.displayName = DaumServer.lastResult.daum.item.keyword;
-			newSeries.push(series);
-		} 
-		chart.series = newSeries;
-		*/
+		DaumServer.send();			
 	}
 	]]>
 </mx:Script>
@@ -53,27 +29,16 @@
 	<q>{test.text}</q>
 </mx:request>	
 </mx:HTTPService>
-<!--
-<mx:ColumnChart id="chart" dataProvider="{DaumServer.lastResult.daum.item}">
+
+<mx:ColumnChart id="chart" dataProvider="{DaumServer.lastResult.daum.item}" showDataTips="true">
+<mx:horizontalAxis>
+	<mx:CategoryAxis dataProvider="{DaumServer.lastResult.daum.item}" categoryField="keyword"/>
+</mx:horizontalAxis>
 <mx:series>
-	<mx:ColumnSeries displayName="keyword" yField="count"/>
+	<mx:ColumnSeries xField="keyword" yField="count"/>
 </mx:series>
 </mx:ColumnChart>
--->
-<mx:DataGrid id="testGrid" dataProvider="{DaumServer.lastResult.daum.item}">
-	<mx:columns>
-		<mx:DataGridColumn dataField="keyword" headerText="keyword">
-		<!--
-			<mx:itemRenderer>
-				<mx:Component>
-					<mx:Label htmlText="{data.keyword}"/>
-				</mx:Component>
-			</mx:itemRenderer>
-			-->
-		</mx:DataGridColumn>
-	</mx:columns>
-</mx:DataGrid>
+
 <mx:TextArea id="test"/>
-<mx:Text id="test1"/>
 <mx:Button click="getKeyword();"/>
 </mx:Application>
