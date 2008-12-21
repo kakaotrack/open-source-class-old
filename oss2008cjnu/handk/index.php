@@ -19,12 +19,13 @@
 		   $printer.=" ".$value->keyword;
 	   }
 	   
-       $target=$target."<div class='listbox'><h3>Extracted Keywords</h3><div>$printer</div></div>";
-	/* Flex Component will be inserted here */
+       $target=$target."<div class='listbox'><h3>Extracted Keywords</h3>";
+	   $target=$target."<center><embed src='plugins/DKKey/bin/KeywordExtractor.swf' width='400' height='250'><center></div>";
 
-       return $target;
-   }
-   function keywordDataSet($DATA){
+	   return $target;
+	}
+	/* Flex Component start*/
+    function keywordDataSet($DATA){
        requireComponent('Textcube.Function.Setting');
        $cfg = setting::fetchConfigVal( $DATA );
        return true;
