@@ -1,0 +1,76 @@
+/* keyword log */
+body
+{
+	margin                  : 0;
+	background              : #FFF url(./images/bg.png) top left repeat-x;
+}
+
+#keyword
+{
+	padding-bottom          : 10px;
+}
+
+#keyword a
+{
+	color                   : #000;
+	text-decoration         : none;
+}
+
+#keyword a:hover
+{
+	text-decoration         : underline;
+}
+
+#keyword h1
+{
+	margin-left             : 20px;
+	margin-top              : 10px;
+	padding-top             : 5px;
+	padding-left            : 30px;
+	height                  : 20px;
+	color                   : #FFF;
+	font-size               : .75em;
+	font-family             : Tahoma, Helvetica, Arial, Gulim, sans-serif;
+	background              : url(./images/bullet.gif) 0% 50% no-repeat;
+}
+
+#keyword .view
+{
+	padding                 : 50px 20px;
+	font-size               : .75em;
+	font-family             : Tahoma, Helvetica, Arial, Gulim, sans-serif;
+}
+
+#keyword .list
+{
+	margin                  : 10px;
+}
+
+#keyword .title
+{
+	margin-top              : 20px;
+	font-size               : .75em;
+	font-family             : Dotum, Arial, sans-serif;
+}
+
+#keyword ul
+{
+	padding                 : 0;
+	margin                  : 10px;
+	list-style              : none;
+	letter-spacing          : -1px;
+	font-size               : .7em;
+	font-family             : Dotum, Arial, sans-serif;
+}
+
+#keyword .date
+{
+	color                   : #999;
+}
+
+#keyword .cnt
+{
+	font-size               : 1em;
+	font-family             : Tahoma, Helvetica, Arial, Dotum, sans-serif;
+	color                   : #666;
+}
