@@ -9,7 +9,7 @@ $b_x = 306976;
 $b_y = 547680; 
 
 # plugin URL
-$path = "http://117.17.102.130/blog";
+$path = "";
 $NGMappluginURL = $path."/plugins/DMap";
 
 ?>
