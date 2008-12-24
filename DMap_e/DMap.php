@@ -21,12 +21,10 @@
 <script type="text/javascript" language="javascript">
 <!--
 
-var map = new DMap("daumMap", {point:new DLatLng(37.48879895934866, 127.03130020103005), level:2}); 
+var map = new DMap("daumMap", {point:new DLatLng(33.376296389091, 126.52580432535), level:7}); 
 var zc = new DZoomControl();
 map.addControl(zc);
 zc.setAlign("right");	
-
-
 
 //var map = new NGMap(viewMode, coord, container1, container2, title);
 //map.makemap();
