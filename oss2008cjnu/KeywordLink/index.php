@@ -1,11 +1,11 @@
 <?php
-/* KeywordUI for Textcube 1.5
+/* KeywordUI for Textcube 1.76
    ----------------------------------
    Version 1.5
-   Needlworks.
+   제주대학교 컴퓨터공학과.
 
-   Creator          : inureyes
-   Maintainer       : inureyes
+   Creator          : 정효원 & 김성규
+   Maintainer       : 정효원 & 김성규
 
    Created at       : 2006.10.3
    Last modified at : 2007.8.15
@@ -23,23 +23,32 @@
  (at your option) any later version.
 
 */
-function KeywordUI_bindKeyword($target,$mother) {
+//http://openapi.naver.com/search?key=6484ff3113728f5c49e7d921205d61a1&target=krdic&query=%EC%98%81%EC%96%B4&start=1&display=10
+$ApiURL = "http://openapi.naver.com/search";
+$NKey = "6484ff3113728f5c49e7d921205d61a1";
+
+function KeywordUI_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨주는 부분
 	global $blogURL;
-	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
+
+//	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
+	$target = "<a href=\"http://openapi.naver.com/search?key=6484ff3113728f5c49e7d921205d61a1&target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a>";
+
 
 	return $target;
 }
 
-function KeywordUI_setSkin($target,$mother) {
+
+function KeywordUI_setSkin($target,$mother) { // 스킨html 읽어들이는 부분
 	global $pluginPath;
 	return $pluginPath."/keylogSkin.html";
 }
+
 function KeywordUI_bindTag($target,$mother) {
 	global $blogURL, $pluginURL, $configVal;
 	requireModel('blog.keyword');
 	$blogid = getBlogId();
 	if(isset($mother) && isset($target)){
-		$tagsWithKeywords = array();
+		$tagsWithKeywords = array(); //태깅된 키워드 가져오기
 		$keywordNames = getKeywordNames($blogid);
 		foreach($target as $tag => $tagLink) {
 			if(in_array($tag,$keywordNames) == true)
@@ -57,6 +66,5 @@ function KeywordUI_handleConfig($data){
 	if($config['useKeywordAsTag'] == true) setting::setBlogSettingGlobal('useKeywordAsTag',true);
 	return true;
 }
-
 
 ?>
