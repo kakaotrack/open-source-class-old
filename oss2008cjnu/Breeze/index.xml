@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
    <plugin version="1.0">
-     <title xml:lang="ko">사이드바 예제 실습</title>
+     <title xml:lang="ko">구글 날씨API를 이용한 날씨 위젯</title>
      <link>http://google.co.kr</link>
      <version>1.0</version>
-     <description xml:lang="ko">현재 예제 테스트 중입니다.</description>
+     <description xml:lang="ko">현재 테스트 중입니다.</description>
      <license>GPL</license>
      <author xml:lang="ko" link="http://google.co.kr">양준호</author>
      <safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
@@ -11,14 +11,6 @@
        <textcube>1.5</textcube>
      </requirements>
      <binding>
-        <sidebar title="날씨 정보" handler="Sidebar_Show">
-           <params>
-              <param>
-                  <title xml:lang="ko">Now testing...</title>
-                  <name>message</name>
-                  <type>string</type>
-              </param>
-			</params>
-        </sidebar>
+        <sidebar title="날씨 정보" handler="Sidebar_Show"/>
      </binding>
    </plugin>
