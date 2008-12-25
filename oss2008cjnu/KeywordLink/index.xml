@@ -14,14 +14,16 @@
     <textcube>1.5</textcube>
   </requirements>
   <binding>
-    <listener event="BindKeyword">KeywordUI_bindKeyword</listener>
-	<listener event="setKeylogSkin">KeywordUI_setSkin</listener>
-	<listener event="ViewTagLists">KeywordUI_bindTag</listener>
-	<config xml:lang="ko" dataValHandler="KeywordUI_handleConfig">
+    <listener event="BindKeyword">KeywordLink_bindKeyword</listener>
+	<listener event="setKeylogSkin">KeywordLink_setSkin</listener>
+	<listener event="ViewTagLists">KeywordLink_bindTag</listener>
+	
+	<config xml:lang="ko" dataValHandler="KeywordLink_handleConfig">
        <window width="500" height="525" />
-       <fieldset legend="태그 설명 설정">
-         <field title="태그 설명" type="checkbox" name="tag">
-           <op name="useKeywordAsTag" value="1" checked="checked"><![CDATA[태그 설명에 키워드를 사용합니다]]></op>
+
+	   <fieldset legend="네이버 오픈API KEY 입력">
+         <field title="NAVER KEY" name="apikey" type="text" size="28" value="">
+           <caption><![CDATA[네이버 오픈API KEY를 입력하세요]]></caption>
          </field>
        </fieldset>
     </config>
