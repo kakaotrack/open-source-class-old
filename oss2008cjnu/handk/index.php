@@ -9,6 +9,7 @@
 	   }else{
 		   $apikey=$data['apikey'];
 	   }
+
 	   $query=str_replace("&"," ",$target);
 	   $query=str_replace("'", "",$query);
 	   

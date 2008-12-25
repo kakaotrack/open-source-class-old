@@ -21,6 +21,11 @@
 		urlAddr = urlAddr+Application.application.parameters.apikey;
 		DaumServer.url=urlAddr;
 		query = Application.application.parameters.query;
+		
+		/*"&"치환 코드*/
+		var rel:RegExp = new RegExp(" amp;", "g");
+		query=query.replace(rel, "&");
+		
 		DaumServer.request.q=query.toString();				
 		DaumServer.send();
 	}
@@ -28,7 +33,7 @@
 		if(DaumServer.lastResult.daum.itemcount==0){
 			chart.visible=false;
 			nocount.visible=true;
-			nocount.text="다음 문맥 추출 API 결과값이 엄서요~";
+			nocount.text="다음 문맥 키워드 추천 API 결과값이 없습니다.";
 		}else{
 			chart.dataProvider=DaumServer.lastResult.daum.item;
 			axis. dataProvider=DaumServer.lastResult.daum.item;
