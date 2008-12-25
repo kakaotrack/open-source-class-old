@@ -1,4 +1,10 @@
-<? require "config.php"; ?>
+<? require "config.php"; 
+	//$_GET["x"];
+	//$_GET["y"];
+	//$_GET["level"];
+	//extract($_GET);
+	extract($HTTP_GET_VARS);
+?>
 
 <html lang="ko">
 <head>
@@ -19,14 +25,15 @@
 
 
 <script type="text/javascript" language="javascript">
-<!--
 
-var map = new DMap("daumMap", {point:new DLatLng(33.376296389091, 126.52580432535), level:7}); 
+
+var map = new DMap("daumMap", {point:new DLatLng(<?=$x?>, <?=$y?>), level:10}); 
 var zc = new DZoomControl();
 map.addControl(zc);
 zc.setAlign("right");	
 
--->
+
 </script>
 </body>
 </html>
+

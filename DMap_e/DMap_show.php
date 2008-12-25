@@ -22,10 +22,9 @@ function windowResizeAndMove(w,h) {
 
 <table id='main' style='width: 100%; height: 100%;' cellpadding='0' cellspacing='0'>
 <tr>
-<td><div id='daumMap'	style='position:absolute;top:0px;left:0px;width:20%;height:20%;' ></div> </td>
-<td>
-<!--<iframe id='ngmap' name="ngmap" src="http://117.17.102.230/DMap_e/DMap.php" scrolling="no" frameborder=0 border=0 width="100%" height="100%" style='border:1px solid gray;'></iframe>-->
-<div id='centerpoint'	style='position:absolute;display:none;width:20px;height:20px;'> <img src='http://sparcs.org/~airlover/9eye.net/map/images/center.gif' alt="+" style='filter: alpha(opacity=50,style=0);'/> </div>
+<td width="80%">
+<div id='daumMap'	style='position:absolute;top:0px;left:0px;width:100%;height:100%;' ></div> 
+
 </td>
 <td style='width:200px; padding:3px;'>
 	<table style='width:100%; height:100%;' cellpadding='0' cellspacing='0'><tr><td align='center' valign="top">		
@@ -36,7 +35,7 @@ function windowResizeAndMove(w,h) {
 				<input id='ng_coordinates' style='width: 120px; border:0px' onclick='toClipboardCoordinate()'/>
 			</td></tr>
 			<tr><td colspan='2'>
-				* 원하는 곳을 더블클릭 하세요.
+				* 원하는 곳을 더블클릭하세요
 			</td></tr>
 			</table>
 		</div>
@@ -62,6 +61,10 @@ function windowResizeAndMove(w,h) {
 			<tr><td style='font-size: 11px;'>
 				<textarea id='ng_out_text' onclick="this.focus();this.select();" wrap="virtual"> </textarea>
 			</td></tr>
+			<tr><td style='font-size: 11px;'>
+				<textarea id='ng_out_text1' onclick="this.focus();this.select();" wrap="virtual"> </textarea>
+			</td></tr>
+
 			<tr><td align='center'> 블로그에 지도를 저장하고<br/> 트랙백을 날려주세요~ </td></tr>
 			</table>
 			
@@ -72,17 +75,24 @@ function windowResizeAndMove(w,h) {
 <span id='forclip' class='ng_hidden'></span>
 
 <script type="text/javascript" language="javascript">
-<!--
+	var map = new DMap("daumMap", {point:new DLatLng(33.376296389091, 126.52580432535), level:7}); 
+	var zc = new DZoomControl();
+	map.addControl(zc);
+	zc.setAlign("right");
 
-var map = new DMap("daumMap", {point:new DLatLng(33.376296389091, 126.52580432535), level:7}); 
-var zc = new DZoomControl();
-map.addControl(zc);
-zc.setAlign("right");	
+	DEvent.addListener(map, "move", function() { 
+		   center = map.getCenter(); 
+		   URLtext = "http://117.17.102.230/DMap_e/DMap.php?&x=" + center.getLat() + "&y=" + center.getLng(); 
+		   Iframe = '<iframe src="' + URLtext  + '" width="400" height="300" border="0" frameborder="0" scrolling="no" style="border:1px solid gray">' + " </iframe>";
+		   document.getElementById("ng_out_text1").innerText = Iframe//"latitude : " + center.getLat() + "  longitude: " + center.getLng();
+	});
 
--->
-</script>
-<script type="text/javascript" language="javascript">
-roundTableNew("ng_title", "round2");
+
+	function insertMapIframe(){	
+	//URLtext = "http://117.17.102.230/DMap.php?&x=" + center.getLat() + "&y=" + center.getLng(); 
+	//Iframe = "<iframe src='"+URLText+"' width='400' height='300' border='0' frameborder='0' scrolling='no' style='border:1px solid gray'> </iframe>";
+	document.getElementById("ng_out_text").innerHTML = URLtext;
+	}
 </script>
 </body>
 </html>
