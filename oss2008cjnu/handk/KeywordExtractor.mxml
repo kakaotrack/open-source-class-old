@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init();" backgroundColor="#FFFFFF" layout="absolute" width="400" height="250">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init();" backgroundColor="#FFFFFF" layout="absolute" width="400" height="150">
 <mx:Script>
 	<![CDATA[
 	import mx.controls.Alert;
@@ -15,30 +15,39 @@
 	public function init():void{
 		Security.allowDomain("*");
 		Security.allowInsecureDomain("*");
+		
+		DaumServer.addEventListener(ResultEvent.RESULT,resultHandler);
 		urlAddr = "http://apis.daum.net/suggest/keyword?apikey=";
-		urlAddr = url+Application.application.parameters.apikey;
+		urlAddr = urlAddr+Application.application.parameters.apikey;
 		DaumServer.url=urlAddr;
 		query = Application.application.parameters.query;
-		DaumServer.request.q=query;				
+		DaumServer.request.q=query.toString();				
 		DaumServer.send();
+	}
+	public function resultHandler(e:ResultEvent):void{
+		if(DaumServer.lastResult.daum.itemcount==0){
+			chart.visible=false;
+			nocount.visible=true;
+			nocount.text="다음 문맥 키워드 추천 API를 통해 추출된 키워드가 없습니다.";
+		}else{
+			chart.dataProvider=DaumServer.lastResult.daum.item;
+			axis. dataProvider=DaumServer.lastResult.daum.item;
+			axis.categoryField="keyword";
+			column.xField="keyword";
+			column.yField="count";
+		}			
 	}
 	]]>
 </mx:Script>
 
-<!--<mx:HTTPService id="DaumServer" method="POST" url="http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883"/>-->
-<mx:HTTPService id="DaumServer" method="POST" useProxy="false"/>
-
-<mx:ColumnChart id="chart" dataProvider="{DaumServer.lastResult.daum.item}" showDataTips="true" x="0" y="0" width="400" height="100%">
-<mx:horizontalAxis>
-	<mx:CategoryAxis dataProvider="{DaumServer.lastResult.daum.item}" categoryField="keyword"/>
-</mx:horizontalAxis>
-<mx:series>
-	<mx:ColumnSeries xField="keyword" yField="count"/>
-</mx:series>
-</mx:ColumnChart>
-<!--
-<mx:TextArea id="test"/>
-<mx:Button click="getKeyword();"/>
--->
-<mx:Text id="test"/>
+<mx:HTTPService id="DaumServer" method="POST"/>
+<mx:Text id="nocount" y="75" visible="false" fontSize="14"/>
+	<mx:ColumnChart id="chart" showDataTips="true" x="0" y="0" width="400" height="100%" fontSize="14">
+	<mx:horizontalAxis>
+		<mx:CategoryAxis id="axis"/>
+	</mx:horizontalAxis>
+	<mx:series>
+		<mx:ColumnSeries id="column"/>
+	</mx:series>
+	</mx:ColumnChart>
 </mx:Application>
