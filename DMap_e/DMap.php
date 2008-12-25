@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>DMap</title>
-<script type="text/javascript" src="http://apis.daum.net/maps/maps.js?apikey=8fc4d54299186535a72f2f1d56205b075946884b"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps.js?apikey=<?=$daumkey?>"></script>
 <script type="text/javascript" src="http://sparcs.org/~airlover/9eye.net/map/optNGMapv06.js"></script>
 </head>
 <body style="margin:0 0px 0px 0px">
@@ -26,8 +26,6 @@ var zc = new DZoomControl();
 map.addControl(zc);
 zc.setAlign("right");	
 
-//var map = new NGMap(viewMode, coord, container1, container2, title);
-//map.makemap();
 -->
 </script>
 </body>

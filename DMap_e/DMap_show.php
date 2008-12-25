@@ -17,10 +17,14 @@ function windowResizeAndMove(w,h) {
 </script>
 <script type="text/javascript" src="http://sparcs.org/~airlover/9eye.net/map/style/roundbox.js"></script>
 <script type="text/javascript" src="http://sparcs.org/~airlover/9eye.net/map/support_tt.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps.js?apikey=<?=$daumkey?>"></script>
+<script type="text/javascript" src="http://sparcs.org/~airlover/9eye.net/map/optNGMapv06.js"></script>
 
-<table id='main' style='width: 100%; height: 100%;' cellpadding='0' cellspacing='0'><tr>
+<table id='main' style='width: 100%; height: 100%;' cellpadding='0' cellspacing='0'>
+<tr>
+<td><div id='daumMap'	style='position:absolute;top:0px;left:0px;width:20%;height:20%;' ></div> </td>
 <td>
-<iframe id='ngmap' name="ngmap" src="http://117.17.102.230/DMap_e/DMap.php?<?=$parameter?>" scrolling="no" frameborder=0 border=0 width="100%" height="100%" style='border:1px solid gray;'></iframe>
+<!--<iframe id='ngmap' name="ngmap" src="http://117.17.102.230/DMap_e/DMap.php" scrolling="no" frameborder=0 border=0 width="100%" height="100%" style='border:1px solid gray;'></iframe>-->
 <div id='centerpoint'	style='position:absolute;display:none;width:20px;height:20px;'> <img src='http://sparcs.org/~airlover/9eye.net/map/images/center.gif' alt="+" style='filter: alpha(opacity=50,style=0);'/> </div>
 </td>
 <td style='width:200px; padding:3px;'>
@@ -61,13 +65,22 @@ function windowResizeAndMove(w,h) {
 			<tr><td align='center'> 블로그에 지도를 저장하고<br/> 트랙백을 날려주세요~ </td></tr>
 			</table>
 			
-		</div>
-	</td></tr>
+		</div>	
 	</table>
 </td>
 </tr></table>
 <span id='forclip' class='ng_hidden'></span>
 
+<script type="text/javascript" language="javascript">
+<!--
+
+var map = new DMap("daumMap", {point:new DLatLng(33.376296389091, 126.52580432535), level:7}); 
+var zc = new DZoomControl();
+map.addControl(zc);
+zc.setAlign("right");	
+
+-->
+</script>
 <script type="text/javascript" language="javascript">
 roundTableNew("ng_title", "round2");
 </script>
