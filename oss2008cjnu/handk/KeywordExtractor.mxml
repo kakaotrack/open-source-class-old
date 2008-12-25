@@ -28,7 +28,7 @@
 		if(DaumServer.lastResult.daum.itemcount==0){
 			chart.visible=false;
 			nocount.visible=true;
-			nocount.text="다음 문맥 키워드 추천 API를 통해 추출된 키워드가 없습니다.";
+			nocount.text="다음 문맥 추출 API 결과값이 엄서요~";
 		}else{
 			chart.dataProvider=DaumServer.lastResult.daum.item;
 			axis. dataProvider=DaumServer.lastResult.daum.item;
@@ -36,6 +36,9 @@
 			column.xField="keyword";
 			column.yField="count";
 		}			
+	}
+	public function myChart(value:Number):String{
+		return String(Math.ceil(value));
 	}
 	]]>
 </mx:Script>
@@ -46,6 +49,9 @@
 	<mx:horizontalAxis>
 		<mx:CategoryAxis id="axis"/>
 	</mx:horizontalAxis>
+	<mx:verticalAxis>
+		<mx:LinearAxis id="num" minimum="0" interval="1" baseAtZero="true"/>
+	</mx:verticalAxis>
 	<mx:series>
 		<mx:ColumnSeries id="column"/>
 	</mx:series>
