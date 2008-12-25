@@ -7,8 +7,8 @@
   <description xml:lang="en">This plugin enables keyword feature in Textcube and dictionary search feature in NAVER Open-API.</description>
   <description xml:lang="ko">텍스트큐브의 키워드 기능과 네이버의 사전검색 오픈API를 연동하였습니다.</description>
   <license>GPL</license>
-  <author xml:lang="en" link="http://forest.nubimaru.com"><![CDATA[Hyowon Jung & Sungkyu Kim (Jeju University Computer Engineering)]]></author>
-  <author xml:lang="ko" link="http://forest.nubimaru.com"><![CDATA[정효원&김성규(제주대학교 컴퓨터 공학과)]]></author>
+  <author xml:lang="en" link="http://lucael.gg.gg"><![CDATA[Hyowon Jung & Sungkyu Kim (Jeju University Computer Engineering)]]></author>
+  <author xml:lang="ko" link="http://lucael.gg.gg"><![CDATA[정효원&김성규(제주대학교 컴퓨터 공학과)]]></author>
   <safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
   <requirements>
     <textcube>1.5</textcube>
@@ -16,9 +16,9 @@
   <binding>
     <listener event="BindKeyword">KeywordLink_bindKeyword</listener>
 	<listener event="setKeylogSkin">KeywordLink_setSkin</listener>
-	<listener event="ViewTagLists">KeywordLink_bindTag</listener>
+	<listener event="setJavascript">KeywordLink_insertJS</listener>	
 	
-	<config xml:lang="ko" dataValHandler="KeywordLink_handleConfig">
+	<config xml:lang="ko" dataValHandler="KeywordLink_setConfig">
        <window width="500" height="525" />
 
 	   <fieldset legend="네이버 오픈API KEY 입력">

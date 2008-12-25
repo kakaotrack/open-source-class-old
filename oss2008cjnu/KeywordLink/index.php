@@ -2,10 +2,10 @@
 /* KeywordUI for Textcube 1.76
    ----------------------------------
    Version 1.5
-   Á¦ÁÖ´ëÇÐ±³ ÄÄÇ»ÅÍ°øÇÐ°ú.
+   ì œì£¼ëŒ€í•™êµ ì»´í“¨í„°ê³µí•™ê³¼.
 
-   Creator          : Á¤È¿¿ø & ±è¼º±Ô
-   Maintainer       : Á¤È¿¿ø & ±è¼º±Ô
+   Creator          : ì •íš¨ì› & ê¹€ì„±ê·œ
+   Maintainer       : ì •íš¨ì› & ê¹€ì„±ê·œ
 
    Created at       : 2006.10.3
    Last modified at : 2007.8.15
@@ -28,43 +28,124 @@
 //$apiurl = "http://openapi.naver.com/search";
 //$apikey = "6484ff3113728f5c49e7d921205d61a1";
 
-function KeywordLink_bindKeyword($target,$mother) { //ÆË¾÷ ¶ç¿ì¸é¼­ ³Ñ°ÜÁÖ´Â ºÎºÐ
-	global $blogURL;
 
+function KeywordLink_bindKeyword($target,$mother) { //íŒì—… ë„ìš°ë©´ì„œ ë„˜ê²¨ì£¼ëŠ” ë¶€ë¶„
+	global $blogURL;
+	global $configVal;
+
+//	$apikey = "6484ff3113728f5c49e7d921205d61a1";
+
+	requireComponent('Textcube.Function.misc');
+	$data = setting::fetchConfigVal( $configVal);
+	
+	$apikey=$data['apikey'];
+	
+	echo $blogURL.' => '.$apikey;
+
+/*
+	if(is_null($data)){
+		return $target." API í‚¤ë¥¼ ìž…ë ¥í•˜ì„¸ìš” ";
+	}
+	else{
+		$apikey=$data['apikey'];
+	}
+*/
 //	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
-	$target = "<a href=\"http://openapi.naver.com/search?key=".$config['apikey']."&target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a>";
+/*
+<table>
+  <tr>
+    <td align='center' onmouseover="menulayer_bgroup1.style.display='';" onmouseout="menulayer_bgroup1.style.display='none';" >
+
+      <table border='0' cellspacing='0' cellpadding='0'  width='100%' bgcolor="#cccccc">
+        <tr>
+	      <td  align='center'>
+      		<a href='javascript://' class='top_menu'>í‚¤ì›Œë“œ</a>
+	      </td>
+		</tr>
+		<tr>
+		  <td align='center'>
+            <div id='menulayer_bgroup1' style='margin-top:-2px; margin-left:-30px; display:none; position:absolute;'>
+        		<table width='60' border='0' cellspacing='0' cellpadding='0' onmouseover=menulayer_bgroup1.style.display='';  onmouseout=menulayer_bgroup1.style.display='none'; >
+			       <tr>
+				      <td style='padding-top:5px;'>ê²€ìƒ‰ë¦¬ìŠ¤íŠ¸</td>
+		          </tr>
+	            </table>
+		    </div>
+    	  </td>
+	    </tr>
+	  </table>
+      
+	</td>
+  </tr>
+</table>
+*/
+
+	$target = "
+<table>
+	<tr>
+		<td align='center' onmouseover=\"menulayer_bgroup1.style.display='';\" onmouseout=\"menulayer_bgroup1.style.display='none';\" >
+			<table border='0' cellspacing='0' cellpadding='0'  width='100%' bgcolor=\"#cccccc\">
+				<tr>
+					<td  align='center'>
+						<a href=\"http://openapi.naver.com/search?key=".$apikey."&target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a></td>
+</td>
+		</tr>
+		<tr>
+		  <td align='center'>
+            <div id='menulayer_bgroup1' style='margin-top:-2px; margin-left:-30px; display:none; position:absolute;'>
+        		<table width='60' border='0' cellspacing='0' cellpadding='0' onmouseover=menulayer_bgroup1.style.display='';  onmouseout=menulayer_bgroup1.style.display='none'; >
+			       <tr>
+				      <td style='padding-top:5px;'>ê²€ìƒ‰ë¦¬ìŠ¤íŠ¸<? include 'config.php'; ?></td>
+		          </tr>
+	            </table>
+		    </div>
+    	  </td>
+	    </tr>
+	  </table>
+      
+	</td>
+  </tr>
+</table>
+	";
+
+
+/*
+	$target = "
+	<table>
+		<tr>
+			<td align='center' onmouseover="menulayer_bgroup1.style.display='';" onmouseout="menulayer_bgroup1.style.display='none';" >
+<a href=\"http://openapi.naver.com/search?key=".$apikey."&target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a></td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+				</div>
+			</td>	
+		</tr>
+	</table>
+
+	";
+*/
 
 	return $target;
 }
 
+function KeywordLink_insertJS(){
+	echo "";
 
-function KeywordLink_setSkin($target,$mother) { // ½ºÅ²html ÀÐ¾îµéÀÌ´Â ºÎºÐ
+}
+
+
+function KeywordLink_setSkin($target,$mother) {
 	global $pluginPath;
 	return $pluginPath."/keylogSkin.html";
 }
 
-function KeywordLink_bindTag($target,$mother) {
-	global $blogURL, $pluginURL, $configVal;
-	requireModel('blog.keyword');
-	$blogid = getBlogId();
-	if(isset($mother) && isset($target)){
-		$tagsWithKeywords = array(); //ÅÂ±ëµÈ Å°¿öµå °¡Á®¿À±â
-		$keywordNames = getKeywordNames($blogid);
-		foreach($target as $tag => $tagLink) {
-			if(in_array($tag,$keywordNames) == true)
-				$tagsWithKeywords[$tag] = $tagLink."<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/".encodeURL($tag)."'); return false\"><img src=\"".$pluginURL."/images/flag_green.gif\" alt=\"Keyword ".$tag."\"/></a>";
-			else $tagsWithKeywords[$tag] = $tagLink;
-		}
-		$target = $tagsWithKeywords;
-	}
-	return $target;
+
+function KeywordLink_setConfig($data){
+       requireComponent('Textcube.Function.Setting');
+       $cfg = setting::fetchConfigVal( $DATA );
+       return true;
 }
 
-
-function KeywordLink_handleConfig($data){
-	requireComponent('Textcube.Function.misc');
-	$config = setting::fetchConfigVal($data);
-	if(!$config['apikey']) return "::ÀÔ·Â ¿À·ù::\n\nAPI KEY¸¦ ÀÔ·ÂÇÏ¼¼¿ä.   ";
-	return true;
-}
-?>
+?> 
