@@ -1,10 +1,10 @@
 
 <?php
 //콤보박스 부분//
-     function Sidebar_Show($parameters=array())
+     function Sidebar_Show($parameters)
      {
 
-$code="
+$code="<br>
 <select id='city' Name='city_info'>
 <option> 서울
 <option> 경주
@@ -79,8 +79,8 @@ $city_info[삼척]	= "Samchok";
 $temp = $_POST["city_info"];
 $cityinfo = $city_info[$temp];
 
-
-$weather = 'http://www.google.co.kr/ig/api?&weather='.$cityinfo.'&hl=ko&oe=utf-8';
+//.$cityinfo.
+$weather = 'http://www.google.co.kr/ig/api?&weather=jeju&hl=ko&oe=utf-8';
 $img = "http://www.google.co.kr";
 
 
@@ -100,28 +100,30 @@ $wind = $xml1->wind_condition;
 
 //인터페이스 부분//
 
-
-//include "weatherinfo.php";
 $code.="<br>";
-$code.="지역명 : ";
+$code.="<b>지역명</b> : 제주";
 $code.=$temp;
 
 $code.="<br>";
-$code.="날짜 : ";
+$code.="<b>날짜</b> : ";
 $code.=$date[data];
 
-$code.="<br>";
-$code.="기상개황";
+$code.="<br><br><center>";
+$code.="<b>기상개황</b>";
 $code.="<br>";
 $code.="<img src=".$img.$imgdata[data].">";
 $code.="<br>";
 $code.=$condition[data];
-$code.= "<br>";
-$code.= "최저 ~ 최고온도 : ";
+$code.= "</center><br>";
+$code.= "<b>최저 ~ 최고온도</b> : ";
 $code.= $temp_min[data]." ~ " ;
 $code.= $temp_max[data]."도";
+$code.= "<br>";
+$code.= $humidity[data];
+$code.= "<br>";
+$code.= $wind[data];
 
-   return $code;
+  return $code;
 
      }
 ?>
