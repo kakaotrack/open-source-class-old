@@ -12,8 +12,9 @@
 	   } $plugInURL="http://".getenv("SERVER_NAME").$_SERVER["REQUEST_URI"]."plugins/DKKey";
 
 	   $query=str_replace("&"," ",$target);
-	   $query=str_replace("'", "",$query);
-	   
+	   $query=htmlspecialchars($query, ENT_QUOTES);
+	   $query=str_replace("'", " ",$query);
+
 	   $target=$target."<div id='listbox' class='listbox'><h3>Extracted Keywords</h3>";
 
 	   $target=$target."<center><object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' id='KeywordExtractor' width='400' height='150' codebase='http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab'> <param name='movie' value='$plugInURL/KeywordExtractor.swf' /><param name='quality' value='high' /><param name='bgcolor' value='#ffffff'/><param name='allowScriptAccess' value='sameDomain'/><embed src='$plugInURL/KeywordExtractor.swf?apikey=$apikey&query=$query' quality='high' bgcolor='#ffffff' width='400' height='150' name='KeywordExtractor' align='middle'	play='true' loop='false' quality='high' allowScriptAccess='sameDomain' type='application/x-shockwave-flash' pluginspage='http://www.adobe.com/go/getflashplayer'></embed></object></center>";
@@ -21,7 +22,7 @@
 
 	   return $target;
 	}
-	/* Flex Component start*/
+
     function keywordDataSet($DATA){
        requireComponent('Textcube.Function.Setting');
        $cfg = setting::fetchConfigVal( $DATA );
