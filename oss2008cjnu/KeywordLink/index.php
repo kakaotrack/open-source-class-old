@@ -28,12 +28,11 @@
 //$apiurl = "http://openapi.naver.com/search";
 //$apikey = "6484ff3113728f5c49e7d921205d61a1";
 
-function KeywordUI_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨주는 부분
+function KeywordLink_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨주는 부분
 	global $blogURL;
 
-	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
-//	$target = "<a href=\"http://openapi.naver.com/search?key=6484 ff31 1372 8f5c 49e7 d921 205d 61a1 &target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a>";
-
+//	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
+	$target = "<a href=\"http://openapi.naver.com/search?key=".$config['apikey']."&target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a>";
 
 	return $target;
 }
@@ -44,8 +43,7 @@ function KeywordLink_setSkin($target,$mother) { // 스킨html 읽어들이는 부분
 	return $pluginPath."/keylogSkin.html";
 }
 
-/*
-function KeywordUI_bindTag($target,$mother) {
+function KeywordLink_bindTag($target,$mother) {
 	global $blogURL, $pluginURL, $configVal;
 	requireModel('blog.keyword');
 	$blogid = getBlogId();
@@ -61,7 +59,7 @@ function KeywordUI_bindTag($target,$mother) {
 	}
 	return $target;
 }
-*/
+
 
 function KeywordLink_handleConfig($data){
 	requireComponent('Textcube.Function.misc');
