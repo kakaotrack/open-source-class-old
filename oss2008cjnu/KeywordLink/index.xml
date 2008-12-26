@@ -9,15 +9,15 @@
   <license>GPL</license>
   <author xml:lang="en" link="http://lucael.gg.gg"><![CDATA[Hyowon Jung & Sungkyu Kim (Jeju University Computer Engineering)]]></author>
   <author xml:lang="ko" link="http://lucael.gg.gg"><![CDATA[정효원&김성규(제주대학교 컴퓨터 공학과)]]></author>
-  <safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
+  <safety changeData="no" exposeData="no" accessLocal="Yes" accessRemote="Yes" accessRaw="no" />
   <requirements>
     <textcube>1.5</textcube>
   </requirements>
   <binding>
-    <listener event="BindKeyword">KeywordLink_bindKeyword</listener>
+	<listener event="ViewPostContent">KeywordLink_insTB</listener>	
+	<listener event="BindKeyword">KeywordLink_bindKeyword</listener>
 	<listener event="setKeylogSkin">KeywordLink_setSkin</listener>
-	<listener event="setJavascript">KeywordLink_insertJS</listener>	
-	
+
 	<config xml:lang="ko" dataValHandler="KeywordLink_setConfig">
        <window width="500" height="525" />
 
