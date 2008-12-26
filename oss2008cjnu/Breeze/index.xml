@@ -12,5 +12,6 @@
      </requirements>
      <binding>
         <sidebar title="날씨 정보" handler="Sidebar_Show"/>
+         <config xml:lang="ko" dataValHandler = "cityinfo1" manifestHandler = "city_info1" />
      </binding>
    </plugin>
