@@ -8,7 +8,7 @@
 	<author xml:lang="ko" link="http://zaku.gg.gg">zaku</author>
 	<safety changeData="no" exposeData="no" accessLocal="no" accessRemote="no" accessRaw="no" />
 	<requirements>
-		<textcube>1.7.6</textcube>
+		<textcube>1.7.4</textcube>
 	</requirements>
 	<binding>
 		<listener event="AddPostEditorToolbox">DMap_AddPostEditorToolBox</listener>
