@@ -111,21 +111,23 @@ function KeywordLink_insTB($target,$mother) {
 	 {
 		$target = $target."
 			<p>
-			<table>
-				<tr>
-					<td><center>문맥 키워드 추출 결과</center><td>
-				</tr>
-				<tr>
-					<td>키워드</td><td>중요도</td><td>출현횟수</td><td>키워드위치</td>
-				</tr>
-				<tr>";
+			<table border=0 cellpadding=0 cellspacing=0> 
+ 
+
+<table border=0 cellpadding=5 cellspacing=1> 
+<tr>
+	<td bgcolor=black align=center width=110><font color=white>키워드</font></td>
+	<td bgcolor=black align=center width=110><font color=white>중요도</font></td>
+	<td bgcolor=black align=center width=110><font color=white>반복 횟수</font></td>
+	<td bgcolor=black align=center width=110><font color=white>키워드 위치</font></td>
+</tr>";
 
 		
 			for($i = 0; $i < $itemCount; $i++)
 			{
-				$target .= "<td>".($obj->items[$i]->keyword)."</td>";
-				$target .= "<td>".($obj->items[$i]->score)."</td>";
-				$target .= "<td><center>".($obj->items[$i]->count)."</center></td>";
+				$target .= "<td bgcolor=white width=110>".($obj->items[$i]->keyword)."</td>";
+				$target .= "<td bgcolor=white width=110><center>".($obj->items[$i]->score)."</td>";
+				$target .= "<td bgcolor=white width=110><center>".($obj->items[$i]->count)."</center></td>";
 				$locationCount = ($obj->items[$i]->count);
 				
 				
