@@ -2,7 +2,6 @@
 	include("config.php");
 	require_once('JSON.php');
 	
-//	header("Content-Type: application/json; charset=utf-8");
 /* KeywordUI for Textcube 1.76
    ----------------------------------
    Version 1.5
@@ -42,7 +41,7 @@ function KeywordLink_insTB($target,$mother) {
 	$data = setting::fetchConfigVal( $configVal);
 	
 	
-	getJSON($target,$mother);
+	getJSON($target);
 
 	// 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
 //	$target = "<table><tr><td>".$target."</td></tr></table>";
@@ -50,7 +49,7 @@ function KeywordLink_insTB($target,$mother) {
 	return $target;
 }
 
-function getJSON($target,$mother)
+function getJSON($target)
 {
 	$json = new Services_JSON(); //JSON 객체 생성
 	
@@ -68,14 +67,88 @@ function getJSON($target,$mother)
 	
 	//$value = array(1, 2, 'foo');
 	
-	$json_data = $json->encode($response); //JSON 방식으로 인코딩
-	echo "<br />".$json->decode($json_data)."<br />";
+	//$json_data = $json->encode($response); //JSON 방식으로 인코딩
+	//echo $json_data;
+	//echo $json->decode($response)."<br />";
 	
 	// accept incoming POST data
 	//$input = $GLOBALS['HTTP_RAW_POST_DATA'];
 	
-	$value = $json->decode($json_data);
-	echo $value;
+//	echo $response;
+
+/*
+stdClass Object
+( [requestor] => [title] => [docID] =>
+[date] => 2008-12-27 21:17:10
+[group] => 1
+[itemCount] => 8
+[items] => Array
+( [0] => stdClass Object
+( [keyword] => 국채수익률
+  [score] => 7.8945
+  [count] => 1 
+  [locations] => Array ( [0] => 370 ) )
+  
+  [1] => stdClass Object
+  ( [keyword] => 서부텍사스산중질유 
+[score] => 3.1576 
+[count] => 1 
+[locations] => Array ( [0] => 529 ) ) 
+[2] => stdClass Object 
+( [keyword] => 뉴욕상품거래소 
+[score] => 2.9684 
+[count] => 1 
+[locations] => Array 
+( [0] => 504 ) ) 
+[3] => stdClass Object 
+( [keyword] => 알코아 
+[score] => 2.9078 
+[count] => 1 
+[locations] => Array 
+( [0] => 81 ) ) 
+[4] => stdClass Object 
+( [keyword] => 하니웰 
+[score] => 2.3831 
+[count] => 1 
+[locations] => Array ( [0] => 112 ) ) 
+[5] => stdClass Object 
+( [keyword] => 다우지수 
+[score] => 2.3641 
+[count] => 1 
+[locations] => Array 
+( [0] => 1 ) ) 
+[6] => stdClass Object 
+( [keyword] => wti 
+[score] => 2.069 
+[count] => 1 
+[locations] => Array 
+( [0] => 541 ) ) 
+[7] => stdClass Object 
+( [keyword] => 나스닥 
+[score] => 1.8174 
+[count] => 1 
+[locations] => Array 
+( [0] => 238 ) ) ) )
+*/
+
+	$obj = json_decode(file_get_contents($request));
+	
+//	print_r($obj);
+/*
+[items] => Array
+( [0] => stdClass Object
+( [keyword] => 국채수익률
+  [score] => 7.8945
+  [count] => 1 
+  [locations] => Array ( [0] => 370 ) )
+ */
+
+	
+	print $obj->items;
+//	print $obj->{'foo-bar'}; // 12345
+//	print $obj->{'item'}->keyword;
+	
+ 	//echo $value;
 	//echo "value[''] : ".$value->date;
 	
 }
@@ -90,13 +163,14 @@ function KeywordLink_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨
 	$data = setting::fetchConfigVal( $configVal);
 
 //	$apikey=$data['apikey'];
-
+/*
 	if(is_null($data)){
 		return $target." API 키를 입력하세요 ";
 	}
 	else{
 		$apikey=$data['apikey'];
 	}
+*/
 
 	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
 
