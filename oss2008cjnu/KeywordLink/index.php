@@ -90,10 +90,6 @@ function KeywordLink_insTB($target,$mother) {
 	
 	$obj = getJSON($target);
 	
-	$count = $obj->itemCount;
-	$keyword = $obj->items[0]->keyword;
-	echo $count."".$keyword;
-
 	/* 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
 	echo '<br />전체 JSON값<br />';
 	echo "itemcount : ".$obj->itemCount."<br /> "; // => 8
@@ -101,15 +97,15 @@ function KeywordLink_insTB($target,$mother) {
 	echo "스코어 : ".$obj->items['0']->score."<br /> ";	// => */
 
 
-	if( $count > 0)  {
-		echo $target;
+ 	if( $obj->itemCount > 0) 
+	 {
 		$target = $target."
-	<div>
-		<table>
-			<tr>
-				<td>키워드</td><td>중요도</td><td>출현횟수</td><td>키워드 위치</td>
-			</tr>
-			<tr>";
+		<div>
+			<table>
+				<tr>
+					<td>키워드</td><td>중요도</td><td>출현횟수</td><td>키워드 위치</td>
+				</tr>
+				<tr>";
 
 		for($i = 0; $i < $count; $i++)
 		{
