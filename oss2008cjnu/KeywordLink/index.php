@@ -25,57 +25,8 @@
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
 
-*/
-//http://openapi.naver.com/search?key=6484ff3113728f5c49e7d921205d61a1&target=krdic&query=%EC%98%81%EC%96%B4&start=1&display=10
-
-//$apiurl = "http://openapi.naver.com/search";
-
-
-function KeywordLink_insTB($target,$mother) {
-
-	requireComponent('Textcube.Function.misc');
-
-//	echo "target : ".$target."<br />";
-//	echo "mother : ".$mother."<br />";
-
-	$data = setting::fetchConfigVal( $configVal);
+// 문맥추출결과
 	
-	
-	getJSON($target);
-
-	// 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
-//	$target = "<table><tr><td>".$target."</td></tr></table>";
-
-	return $target;
-}
-
-function getJSON($target)
-{
-	$json = new Services_JSON(); //JSON 객체 생성
-	
-	$content = strip_tags($target); //본문 내용에 걸려있는 모든 태그들 제거
-	//옵션으로 간주 될수 있는 부분을 제거 &, ', " 등등 삭제
-	$content = str_replace("&"," ",$content); 
-	$content = htmlspecialchars($content, ENT_QUOTES);
-	$content = str_replace("'", " ",$content); 
-	
-	$request = "http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883&output=JSON&q='".urlencode($content)."'";
-	
-	$response = file_get_contents($request);
-	
-	// convert a complex value to JSON notation
-	
-	//$value = array(1, 2, 'foo');
-	
-	//$json_data = $json->encode($response); //JSON 방식으로 인코딩
-	//echo $json_data;
-	//echo $json->decode($response)."<br />";
-	
-	// accept incoming POST data
-	//$input = $GLOBALS['HTTP_RAW_POST_DATA'];
-	
-//	echo $response;
-
 /*
 stdClass Object
 ( [requestor] => [title] => [docID] =>
@@ -131,6 +82,65 @@ stdClass Object
 ( [0] => 238 ) ) ) )
 */
 
+function KeywordLink_insTB($target,$mother) {
+	
+	requireComponent('Textcube.Function.misc');
+
+	$data = setting::fetchConfigVal( $configVal);
+	
+	$obj = getJSON($target);
+	
+	$count = $obj->itemCount;
+	$keyword = $obj->items[0]->keyword;
+	echo $count."".$keyword;
+
+	/* 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
+	echo '<br />전체 JSON값<br />';
+	echo "itemcount : ".$obj->itemCount."<br /> "; // => 8
+	echo "키워드 : ".$obj->items['0']->keyword."<br /> "; // =>국채수익률
+	echo "스코어 : ".$obj->items['0']->score."<br /> ";	// => */
+
+
+	if( $count > 0)  {
+		echo $target;
+		$target = $target."
+	<div>
+		<table>
+			<tr>
+				<td>키워드</td><td>중요도</td><td>출현횟수</td><td>키워드 위치</td>
+			</tr>
+			<tr>";
+
+		for($i = 0; $i < $count; $i++)
+		{
+			$target .= "<td>".($obj->items[$i]->keyword)."</td>";
+			$target .= "<td>".($obj->items[$i]->score)."</td>";
+			$target .= "<td>".($obj->items[$i]->count)."</td>";
+			$target .= "<td>".($obj->items[$i]->locations[0])."</td>";
+			$target .= "</tr>";
+		}
+		$target = $target."</table></div>";
+	}
+
+	else
+		$target = $target.'키워드 추출 결과 : 결과값이 없습니다<br />';
+
+
+	return $target;
+}
+
+function getJSON($target)
+{
+	$json = new Services_JSON(); //JSON 객체 생성
+	
+	$content = strip_tags($target); //본문 내용에 걸려있는 모든 태그들 제거
+	//옵션으로 간주 될수 있는 부분을 제거 &, ', " 등등 삭제
+	$content = str_replace("&"," ",$content); 
+	$content = htmlspecialchars($content, ENT_QUOTES);
+	$content = str_replace("'", " ",$content); 
+	
+	$request = "http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883&output=JSON&q='".urlencode($content)."'";
+
 	$obj = json_decode(file_get_contents($request));
 	
 //	print_r($obj);
@@ -142,15 +152,8 @@ stdClass Object
   [count] => 1 
   [locations] => Array ( [0] => 370 ) )
  */
-
 	
-	print $obj->items;
-//	print $obj->{'foo-bar'}; // 12345
-//	print $obj->{'item'}->keyword;
-	
- 	//echo $value;
-	//echo "value[''] : ".$value->date;
-	
+	return $obj;
 }
 
 
