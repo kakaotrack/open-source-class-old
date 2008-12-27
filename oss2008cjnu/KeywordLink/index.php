@@ -1,6 +1,8 @@
 <?php
-   include("config.php");
-
+	include("config.php");
+	require_once('JSON.php');
+	
+//	header("Content-Type: application/json; charset=utf-8");
 /* KeywordUI for Textcube 1.76
    ----------------------------------
    Version 1.5
@@ -39,29 +41,43 @@ function KeywordLink_insTB($target,$mother) {
 
 	$data = setting::fetchConfigVal( $configVal);
 	
-
-
+	
+	getJSON($target,$mother);
 
 	// 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
-	$target = $target."";
+//	$target = "<table><tr><td>".$target."</td></tr></table>";
 
 	return $target;
 }
 
-function KeywordLink_insJS($target,$mother) {
-
-
-
-?>
-<script>
-
-</script>
-
-
-<?
-
-
-
+function getJSON($target,$mother)
+{
+	$json = new Services_JSON(); //JSON 객체 생성
+	
+	$content = strip_tags($target); //본문 내용에 걸려있는 모든 태그들 제거
+	//옵션으로 간주 될수 있는 부분을 제거 &, ', " 등등 삭제
+	$content = str_replace("&"," ",$content); 
+	$content = htmlspecialchars($content, ENT_QUOTES);
+	$content = str_replace("'", " ",$content); 
+	
+	$request = "http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883&output=JSON&q='".urlencode($content)."'";
+	
+	$response = file_get_contents($request);
+	
+	// convert a complex value to JSON notation
+	
+	//$value = array(1, 2, 'foo');
+	
+	$json_data = $json->encode($response); //JSON 방식으로 인코딩
+	echo "<br />".$json->decode($json_data)."<br />";
+	
+	// accept incoming POST data
+	//$input = $GLOBALS['HTTP_RAW_POST_DATA'];
+	
+	$value = $json->decode($json_data);
+	echo $value;
+	//echo "value[''] : ".$value->date;
+	
 }
 
 
@@ -72,10 +88,9 @@ function KeywordLink_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨
 
 	requireComponent('Textcube.Function.misc');
 	$data = setting::fetchConfigVal( $configVal);
-	
-	echo $target." " ;
+
 //	$apikey=$data['apikey'];
-/*
+
 	if(is_null($data)){
 		return $target." API 키를 입력하세요 ";
 	}
@@ -85,35 +100,7 @@ function KeywordLink_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨
 
 	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
 
-/*
-	$target = "
-<table>
-	<tr>
-		<td align='center' onmouseover=\"menulayer_bgroup1.style.display='';\" onmouseout=\"menulayer_bgroup1.style.display='none';\" >
-			<table border='0' cellspacing='0' cellpadding='0'  width='100%' bgcolor=\"#cccccc\">
-				<tr>
-					<td  align='center'>
-						<a href=\"http://openapi.naver.com/search?key=".$apikey."&target=krdic&start=1&display=10&query=".rawurlencode($target)."\" class=\"key1\" return false>{$target}</a></td>
-		</td>
-	</tr>
-	<tr>
- 		<td align='center'>
-		    <div id='menulayer_bgroup1' style='margin-top:-2px; margin-left:-30px; display:none; position:absolute;'>
-       			<table width='60' border='0' cellspacing='0' cellpadding='0' onmouseover=menulayer_bgroup1.style.display='';  onmouseout=menulayer_bgroup1.style.display='none'; >
-					<tr>
-						<td style='padding-top:5px;'>검색리스트</td>
-					</tr>
-	            </table>
-		    </div>
-    	  </td>
-	    </tr>
-	  </table>
-      
-	</td>
-  </tr>
-</table>
-	";
-*/
+
 	$apikey = "6484ff3113728f5c49e7d921205d61a1";
 
 	$target = "<a href=\"http://openapi.naver.com/search?key=".$apikey."&target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a>";
@@ -129,7 +116,7 @@ function KeywordLink_setSkin($target,$mother) {
 
 function KeywordLink_setConfig($data){
        requireComponent('Textcube.Function.Setting');
-       $cfg = setting::fetchConfigVal( $DATA );
+       $cfg = setting::fetchConfigVal( $data );
        return true;
 }
 
