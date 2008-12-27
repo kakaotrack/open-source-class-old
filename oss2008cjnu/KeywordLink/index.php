@@ -96,8 +96,9 @@ function KeywordLink_insTB($target,$mother) {
 	echo "키워드 : ".$obj->items['0']->keyword."<br /> "; // =>국채수익률
 	echo "스코어 : ".$obj->items['0']->score."<br /> ";	// => */
 
-
- 	if( $obj->itemCount > 0) 
+	$count = $obj->itemCount;
+	
+ 	if( $count > 0) 
 	 {
 		$target = $target."
 		<div>
