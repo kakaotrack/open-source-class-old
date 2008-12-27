@@ -101,18 +101,16 @@ function KeywordLink_insTB($target,$mother) {
 		$apikey=$data['apikey'];
 	}
 	
-	$obj = getJSON($target,$apikey);
-
-	$itemCount = $obj->itemCount; //키워드 문맥 추출 결과 총 갯수
+	$obj = getJSON($target,$apikey); //JSON결과 OBJ변수에 담기
 	
+	$itemCount = $obj->itemCount; //키워드 문맥 추출 결과 총 갯수
 	
 	// 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
 	
  	if( $itemCount > 0) 
 	 {
 		$target = $target."
-		<div>
-			<br />
+			<p>
 			<table>
 				<tr>
 					<td><center>문맥 키워드 추출 결과</center><td>
@@ -122,28 +120,31 @@ function KeywordLink_insTB($target,$mother) {
 				</tr>
 				<tr>";
 
-		for($i = 0; $i < $itemCount; $i++)
-		{
-			$target .= "<td>".($obj->items[$i]->keyword)."</td>";
-			$target .= "<td>".($obj->items[$i]->score)."</td>";
-			$target .= "<td><center>".($obj->items[$i]->count)."</center></td>";
-			$locationCount = ($obj->items[$i]->count);
-			
-			
-			if( $locationCount > 1){
-				for($j = 0; $j < $locationCount ; $j++)
-					$target .= "<td><center>".($obj->items[$i]->locations[$j])."</center></td>";
+		
+			for($i = 0; $i < $itemCount; $i++)
+			{
+				$target .= "<td>".($obj->items[$i]->keyword)."</td>";
+				$target .= "<td>".($obj->items[$i]->score)."</td>";
+				$target .= "<td><center>".($obj->items[$i]->count)."</center></td>";
+				$locationCount = ($obj->items[$i]->count);
+				
+				
+				if( $locationCount > 1){
+					for($j = 0; $j < $locationCount ; $j++)
+						$target .= "<td><center>".($obj->items[$i]->locations[$j])."</center></td>";
+				}
+				else
+					$target .= "<td><center>".($obj->items[$i]->locations[0])."</center></td>";
+				
+				$target .= "</tr>";
 			}
-			else
-				$target .= "<td><center>".($obj->items[$i]->locations[0])."</center></td>";
-			
-			$target .= "</tr>";
-		}
-		$target = $target."</table></div>";
+		//}
+		
+		$target = $target."</table>";
 	}
 
 	else
-		return $target.'키워드 추출 결과 : 결과값이 없습니다<br />';
+		return $target.'<p><font color=red>※키워드 추출 결과 : 결과값이 없습니다※</font></p>';
 
 
 	return $target;
@@ -157,12 +158,13 @@ function getJSON($target,$apikey)
 	//옵션으로 간주 될수 있는 부분을 제거 &, ', " 등등 삭제
 	$content = str_replace("&"," ",$content); 
 	$content = htmlspecialchars($content, ENT_QUOTES);
-	$content = str_replace("'", " ",$content); 
+	$content = str_replace("\"", " ",$content); 
+
 	
 	$request = "http://apis.daum.net/suggest/keyword?apikey=".$apikey."&output=JSON&q='".urlencode($content)."'";
 
 	$obj = json_decode(file_get_contents($request));
-	
+
 //	print_r($obj);
 /*
 [items] => Array
@@ -175,6 +177,11 @@ function getJSON($target,$apikey)
 	
 	return $obj;
 }
+
+/* 아직 쓰이지 않고 후에 쓰일 함수들
+	XML문서에 넣을 이벤트
+	<listener event="BindKeyword">KeywordLink_bindKeyword</listener>
+	<listener event="setKeylogSkin">KeywordLink_setSkin</listener>
 
 
 function KeywordLink_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨주는 부분
@@ -203,7 +210,7 @@ function KeywordLink_setSkin($target,$mother) {
 	global $pluginPath;
 	return $pluginPath."/keylogSkin.html";
 }
-
+*/
 
 function KeywordLink_setConfig($data){
        requireComponent('Textcube.Function.Setting');

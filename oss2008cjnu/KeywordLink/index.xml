@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin version="1.0">
-  <title xml:lang="ko">키워드 사전검색</title>
-  <title xml:lang="en">Keyword dictionary Search</title>
+  <title xml:lang="ko">문맥Keyword 추천기</title>
+  <title xml:lang="en">Keyword Recommendation</title>
   <link>http://lucael.gg.gg/</link>
   <version>1.0.1</version>
   <description xml:lang="en">This plugin enables keyword feature in Textcube and dictionary search feature in NAVER Open-API.</description>
@@ -15,9 +15,6 @@
   </requirements>
   <binding>
 	<listener event="ViewPostContent">KeywordLink_insTB</listener>	
-	<listener event="BindKeyword">KeywordLink_bindKeyword</listener>
-	<listener event="setKeylogSkin">KeywordLink_setSkin</listener>
-
 	<config xml:lang="ko" dataValHandler="KeywordLink_setConfig">
        <window width="500" height="525" />
 
