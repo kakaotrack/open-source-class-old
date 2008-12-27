@@ -21,9 +21,9 @@
 	<config xml:lang="ko" dataValHandler="KeywordLink_setConfig">
        <window width="500" height="525" />
 
-	   <fieldset legend="네이버 오픈API KEY 입력">
-         <field title="NAVER KEY" name="apikey" type="text" size="28" value="">
-           <caption><![CDATA[네이버 오픈API KEY를 입력하세요]]></caption>
+	   <fieldset legend="DAUM 오픈API KEY 입력">
+         <field title="API KEY" name="apikey" type="text" size="40">
+           <caption><![CDATA[※DAUM 오픈 API KEY(문맥 키워드 추천 서비스)를 입력하세요※]]></caption>
          </field>
        </fieldset>
     </config>

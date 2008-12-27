@@ -80,53 +80,76 @@ stdClass Object
 [count] => 1 
 [locations] => Array 
 ( [0] => 238 ) ) ) )
+
+daumkey : 5dc435a4c228ad63347fdadb4634935bbab3962e
+
 */
 
 function KeywordLink_insTB($target,$mother) {
-	
+	global $configVal;
+
 	requireComponent('Textcube.Function.misc');
-
 	$data = setting::fetchConfigVal( $configVal);
-	
-	$obj = getJSON($target);
-	
-	/* 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
-	echo '<br />전체 JSON값<br />';
-	echo "itemcount : ".$obj->itemCount."<br /> "; // => 8
-	echo "키워드 : ".$obj->items['0']->keyword."<br /> "; // =>국채수익률
-	echo "스코어 : ".$obj->items['0']->score."<br /> ";	// => */
 
-	$count = $obj->itemCount;
+//	$apikey=$data['apikey'];
+
+
+	if(!$data['apikey']){
+		return $target."<p><font color=red>※API 키가 입력되어있지 않습니다 by KeywordLink Plugin※</font></p>";
+	}
+	else{
+		$apikey=$data['apikey'];
+	}
 	
- 	if( $count > 0) 
+	$obj = getJSON($target,$apikey);
+
+	$itemCount = $obj->itemCount; //키워드 문맥 추출 결과 총 갯수
+	
+	
+	// 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
+	
+ 	if( $itemCount > 0) 
 	 {
 		$target = $target."
 		<div>
+			<br />
 			<table>
 				<tr>
-					<td>키워드</td><td>중요도</td><td>출현횟수</td><td>키워드 위치</td>
+					<td><center>문맥 키워드 추출 결과</center><td>
+				</tr>
+				<tr>
+					<td>키워드</td><td>중요도</td><td>출현횟수</td><td>키워드위치</td>
 				</tr>
 				<tr>";
 
-		for($i = 0; $i < $count; $i++)
+		for($i = 0; $i < $itemCount; $i++)
 		{
 			$target .= "<td>".($obj->items[$i]->keyword)."</td>";
 			$target .= "<td>".($obj->items[$i]->score)."</td>";
-			$target .= "<td>".($obj->items[$i]->count)."</td>";
-			$target .= "<td>".($obj->items[$i]->locations[0])."</td>";
+			$target .= "<td><center>".($obj->items[$i]->count)."</center></td>";
+			$locationCount = ($obj->items[$i]->count);
+			
+			
+			if( $locationCount > 1){
+				for($j = 0; $j < $locationCount ; $j++)
+					$target .= "<td><center>".($obj->items[$i]->locations[$j])."</center></td>";
+			}
+			else
+				$target .= "<td><center>".($obj->items[$i]->locations[0])."</center></td>";
+			
 			$target .= "</tr>";
 		}
 		$target = $target."</table></div>";
 	}
 
 	else
-		$target = $target.'키워드 추출 결과 : 결과값이 없습니다<br />';
+		return $target.'키워드 추출 결과 : 결과값이 없습니다<br />';
 
 
 	return $target;
 }
 
-function getJSON($target)
+function getJSON($target,$apikey)
 {
 	$json = new Services_JSON(); //JSON 객체 생성
 	
@@ -136,7 +159,7 @@ function getJSON($target)
 	$content = htmlspecialchars($content, ENT_QUOTES);
 	$content = str_replace("'", " ",$content); 
 	
-	$request = "http://apis.daum.net/suggest/keyword?apikey=b8be32d336991e57612924b4512882c8a1bdd883&output=JSON&q='".urlencode($content)."'";
+	$request = "http://apis.daum.net/suggest/keyword?apikey=".$apikey."&output=JSON&q='".urlencode($content)."'";
 
 	$obj = json_decode(file_get_contents($request));
 	
@@ -163,21 +186,15 @@ function KeywordLink_bindKeyword($target,$mother) { //팝업 띄우면서 넘겨
 	$data = setting::fetchConfigVal( $configVal);
 
 //	$apikey=$data['apikey'];
-/*
+
 	if(is_null($data)){
 		return $target." API 키를 입력하세요 ";
 	}
 	else{
 		$apikey=$data['apikey'];
 	}
-*/
 
 	$target = "<a href=\"#\" class=\"key1\" onclick=\"openKeyword('$blogURL/keylog/" . rawurlencode($target) . "'); return false\">{$target}</a>";
-
-
-	$apikey = "6484ff3113728f5c49e7d921205d61a1";
-
-	$target = "<a href=\"http://openapi.naver.com/search?key=".$apikey."&target=krdic&start=1&display=10&query=". rawurlencode($target) ."\" class= \" key1 \"  return false\">{$target}</a>";
 
 	return $target;
 }
