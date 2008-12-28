@@ -2,7 +2,8 @@
 	include("config.php");
 	require_once('JSON.php');
 	
-/* KeywordUI for Textcube 1.76
+/*
+   KeywordLink for Textcube 1.76
    ----------------------------------
    Version 1.5
    제주대학교 컴퓨터공학과.
@@ -12,78 +13,40 @@
 
    Created at       : 2006.10.3
    Last modified at : 2007.8.15
- 
- This plugin enables keyword / keylog feature in Textcube.
- For the detail, visit http://forum.tattersite.com/ko
-
-
- General Public License
- http://www.gnu.org/licenses/gpl.html
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
-// 문맥추출결과
-	
-/*
-stdClass Object
-( [requestor] => [title] => [docID] =>
-[date] => 2008-12-27 21:17:10
-[group] => 1
-[itemCount] => 8
-[items] => Array
-( [0] => stdClass Object
-( [keyword] => 국채수익률
-  [score] => 7.8945
-  [count] => 1 
-  [locations] => Array ( [0] => 370 ) )
-  
-  [1] => stdClass Object
-  ( [keyword] => 서부텍사스산중질유 
-[score] => 3.1576 
-[count] => 1 
-[locations] => Array ( [0] => 529 ) ) 
-[2] => stdClass Object 
-( [keyword] => 뉴욕상품거래소 
-[score] => 2.9684 
-[count] => 1 
-[locations] => Array 
-( [0] => 504 ) ) 
-[3] => stdClass Object 
-( [keyword] => 알코아 
-[score] => 2.9078 
-[count] => 1 
-[locations] => Array 
-( [0] => 81 ) ) 
-[4] => stdClass Object 
-( [keyword] => 하니웰 
-[score] => 2.3831 
-[count] => 1 
-[locations] => Array ( [0] => 112 ) ) 
-[5] => stdClass Object 
-( [keyword] => 다우지수 
-[score] => 2.3641 
-[count] => 1 
-[locations] => Array 
-( [0] => 1 ) ) 
-[6] => stdClass Object 
-( [keyword] => wti 
-[score] => 2.069 
-[count] => 1 
-[locations] => Array 
-( [0] => 541 ) ) 
-[7] => stdClass Object 
-( [keyword] => 나스닥 
-[score] => 1.8174 
-[count] => 1 
-[locations] => Array 
-( [0] => 238 ) ) ) )
-
-daumkey : 5dc435a4c228ad63347fdadb4634935bbab3962e
-
 */
+
+
+
+function doPost($uri,$postdata,$host){ 
+        $da = fsockopen($host, 80, $errno, $errstr); 
+        if (!$da) { 
+            echo "$errstr ($errno)<br/>\n"; 
+            echo $da; 
+        } 
+        else { 
+            $salida = "POST $uri  HTTP/1.1\r\n"; 
+            $salida.= "Host: $host\r\n"; 
+            $salida.= "User-Agent: PHP Script\r\n"; 
+            $salida.= "Content-Type: application/x-www-form-urlencoded\r\n"; 
+            $salida.= "Content-Length: ".strlen($postdata)."\r\n"; 
+            $salida.= "Connection: close\r\n\r\n"; 
+            $salida.= $postdata; 
+            fwrite($da, $salida); 
+                     while (!feof($da)) 
+                $response.=fgets($da, 128); 
+            $response=split("\r\n\r\n",$response); 
+            $header=$response[0]; 
+            $responsecontent=$response[1]; 
+            if(!(strpos($header,"Transfer-Encoding: chunked")===false)){ 
+                $aux=split("\r\n",$responsecontent); 
+                for($i=0;$i<count($aux);$i++) 
+                    if($i==0 || ($i%2==0)) 
+                        $aux[$i]=""; 
+                $responsecontent=implode("",$aux); 
+            }//if 
+            return chop($responsecontent); 
+        }//else 
+}//function-doPost 
 
 function KeywordLink_insTB($target,$mother) {
 	global $configVal;
@@ -91,18 +54,15 @@ function KeywordLink_insTB($target,$mother) {
 	requireComponent('Textcube.Function.misc');
 	$data = setting::fetchConfigVal( $configVal);
 
-//	$apikey=$data['apikey'];
-
-
 	if(!$data['apikey']){
 		return $target."<p><font color=red>※API 키가 입력되어있지 않습니다 by KeywordLink Plugin※</font></p>";
 	}
 	else{
 		$apikey=$data['apikey'];
 	}
-	
+
 	$obj = getJSON($target,$apikey); //JSON결과 OBJ변수에 담기
-	
+		
 	$itemCount = $obj->itemCount; //키워드 문맥 추출 결과 총 갯수
 	
 	// 본문 키워드 추출후 카운트 갯수에 따라 테이블 줄수를 증가시켜 출력
@@ -114,13 +74,13 @@ function KeywordLink_insTB($target,$mother) {
 			<table border=0 cellpadding=0 cellspacing=0> 
  
 
-<table border=0 cellpadding=5 cellspacing=1> 
-<tr>
-	<td bgcolor=black align=center width=110><font color=white>키워드</font></td>
-	<td bgcolor=black align=center width=110><font color=white>중요도</font></td>
-	<td bgcolor=black align=center width=110><font color=white>반복 횟수</font></td>
-	<td bgcolor=black align=center width=110><font color=white>키워드 위치</font></td>
-</tr>";
+			<table border=0 cellpadding=5 cellspacing=1> 
+			<tr>
+				<td bgcolor=black align=center width=110><font color=white>키워드</font></td>
+				<td bgcolor=black align=center width=110><font color=white>중요도</font></td>
+				<td bgcolor=black align=center width=110><font color=white>반복 횟수</font></td>
+				<td bgcolor=black align=center width=110><font color=white>키워드 위치</font></td>
+			</tr>";
 
 		
 			for($i = 0; $i < $itemCount; $i++)
@@ -162,20 +122,11 @@ function getJSON($target,$apikey)
 	$content = htmlspecialchars($content, ENT_QUOTES);
 	$content = str_replace("\"", " ",$content); 
 
-	
+//	$post = doPost("/keyword?apikey=5dc435a4c228ad63347fdadb4634935bbab3962e&output=JSON", $content, "apis.daum.net/suggest");
+//	print_r( $post );
+
 	$request = "http://apis.daum.net/suggest/keyword?apikey=".$apikey."&output=JSON&q='".urlencode($content)."'";
-
 	$obj = json_decode(file_get_contents($request));
-
-//	print_r($obj);
-/*
-[items] => Array
-( [0] => stdClass Object
-( [keyword] => 국채수익률
-  [score] => 7.8945
-  [count] => 1 
-  [locations] => Array ( [0] => 370 ) )
- */
 	
 	return $obj;
 }
