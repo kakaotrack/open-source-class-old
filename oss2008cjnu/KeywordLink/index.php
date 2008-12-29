@@ -121,9 +121,10 @@ function getJSON($target,$apikey)
 	$content = str_replace("&"," ",$content); 
 	$content = htmlspecialchars($content, ENT_QUOTES);
 	$content = str_replace("\"", " ",$content); 
+	$content = "q='".$content."'";
 
-//	$post = doPost("/keyword?apikey=5dc435a4c228ad63347fdadb4634935bbab3962e&output=JSON", $content, "apis.daum.net/suggest");
-//	print_r( $post );
+	$post = doPost("/keyword?apikey=5dc435a4c228ad63347fdadb4634935bbab3962e&output=JSON", $content, "apis.daum.net/suggest");
+	print_r( $post );
 
 	$request = "http://apis.daum.net/suggest/keyword?apikey=".$apikey."&output=JSON&q='".urlencode($content)."'";
 	$obj = json_decode(file_get_contents($request));
