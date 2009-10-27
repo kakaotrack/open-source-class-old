@@ -29,7 +29,6 @@
 	<script src="js/editor.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/editor_sample.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-	
 		
 	<style type="text/css">
 		body { padding:0;margin:0; background:#fff; font-family:'굴림',gulim,sans-serif; font-size:12px;  }
@@ -77,7 +76,7 @@
 		.tx-translation-menu { width: 500px; }
 		
 	</style>
-	<script type="text/javascript">
+	<script type="text/javascript"><!--
 	// <![CDATA[
 		/*-------- 글 등록할 때 필요한 함수들 시작 ----------*/
 		
@@ -272,11 +271,40 @@ Trex.Tool.Translation = Trex.Class.create({
                               }
                           );
                       }});
-
-
-//google.setOnLoadCallback(initialize);
 	/*---------- 번역 함수 끝-----------*/
-  </script>
+	/*----------지도보기--------------*/
+	/*TrexConfig.addTool(
+        "mapview", 
+        {
+                wysiwygonly: true,
+                sync: false,
+                status: false
+        }
+);
+Trex.Tool.Mapview = Trex.Class.create({
+	$const: {
+             __Identity: 'mapview'
+            },
+            $extend: Trex.Tool,
+               oninitialized: function(config) {
+                  var _tool = this;
+                  var _canvas = this.canvas;
+                      this.weave.bind(this)(
+                          new Trex.Button(this.buttonCfg),
+                          null,
+                          function() {
+                        	  alert();
+                        	  var map = new DMap("_canvas.getPanel('html')");
+                              alert(map.value);
+                        		map.setCenter(new DLatLng(37.48879895934866, 127.03130020103005), 2);
+                        	 
+                        		map.addControl(new DIndexMapControl());
+                        		map.addControl(new DZoomControl());                        	  
+                              }
+                          );
+                      }});*/
+/*----------지도보기 끝--------------*/
+  --></script>
 
 	</head>
 <body>
@@ -359,7 +387,7 @@ Trex.Tool.Translation = Trex.Class.create({
 			<div id="tx_toolbar_basic" class="tx-toolbar tx-toolbar-basic"><div class="tx-toolbar-boundary">
 				<ul class="tx-bar tx-bar-left">
 				 			<li class="tx-list">
-				<div id="tx_fontfamily" unselectable="on" class="tx-slt-70bg tx-fontfamily">
+				<div id="tx_fontfamily" unselectable="on" class="tx-slt-42bg tx-fontfamily">
 					<a href="javascript:;" title="글꼴">굴림</a>
 				</div>
 				<div id="tx_fontfamily_menu" class="tx-fontfamily-menu tx-menu" unselectable="on"></div>
@@ -550,6 +578,12 @@ Trex.Tool.Translation = Trex.Class.create({
 							<a title="번역" class="tx-icon" href="javascript:;">번역하기</a>
 					</div>
 			</ul>
+			<ul class="tx-bar tx-bar-left">
+			<li class="tx-list">
+					<div id="tx_mapview" class="tx-mapview tx-btn-lrbg" unselectable="on">
+							<a title="맵보기" class="tx-icon" href="pages/popup/map.html" target="_blank"></a>
+					</div>
+			</ul>			
 				<ul class="tx-bar tx-bar-right">
 				 			<li class="tx-list">
 				<div unselectable="on" class="tx-btn-nlrbg tx-advanced" id="tx_advanced">
