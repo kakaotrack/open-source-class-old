@@ -1,4 +1,4 @@
-evolution OS
+Revolution OS
 
 과목 : 오픈소스서비스개발방법론
 담당 : 윤석찬
