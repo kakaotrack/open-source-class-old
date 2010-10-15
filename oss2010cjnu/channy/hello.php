@@ -1,3 +1,4 @@
 <?
-	echo "Hello, World!"
+	echo "Hello, World!";
+	echo "Change test";
 ?>
