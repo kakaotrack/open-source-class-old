@@ -1,1 +1,4 @@
-실험용입니다.
+Index: test.txt
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
