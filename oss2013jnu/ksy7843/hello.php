@@ -1,0 +1,3 @@
+<?
+	echo "where am i??";
+?>
