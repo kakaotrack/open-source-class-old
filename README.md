@@ -1,6 +1,6 @@
 # Open Source Class
 
-This project offers the class resource of Open Source Software Development for university students majored in computer engineering.  This class was started in 2007 as a co-work class with Daum Communications and Jeju National University.
+This project offers class resources of Open Source Software Development for university students majored in computer engineering.  This class was started in 2007 as a co-work class with Daum Communications and Jeju National University.
 
 ### Instructor
 * Channy Yun
