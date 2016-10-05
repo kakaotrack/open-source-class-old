@@ -1,6 +1,6 @@
 # Open Source Class
 
-This project offers class resources of Open Source Software Development for university students majored in computer engineering.  This class was started in 2007 as a co-work class with Daum Communications and Jeju National University.
+1. This project offers class resources of Open Source Software Development for university students majored in computer engineering.  This class was started in 2007 as a co-work class with Daum Communications and Jeju National University.
 
 ### Instructor
 * Channy Yun
@@ -84,4 +84,4 @@ This class shares the philosophy of free and open source software, communuty-dri
 * http://www.cs.pdx.edu/user/coursedetails/110
 * http://www2.sims.berkeley.edu/academics/courses/is296a-2/f05/
 * http://wiki.cs.rpi.edu/trac/rcos/wiki/
-* http://www.cs.umd.edu/class/fall2007/cmsc433/projects/os/index.html 
+* http://www.cs.umd.edu/class/fall2007/cmsc433/projects/os/index.html
